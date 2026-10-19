@@ -18,7 +18,8 @@ import com.itera.pam.p1.getPlatformName
 
 fun getGreetingMessage(): String {
     // Kode kamu di sini...
-    return "TODO: lengkapi getGreetingMessage()"
+    val platform = getPlatformName()
+    return "Halo dari $platform!"
 }
 
 @Composable

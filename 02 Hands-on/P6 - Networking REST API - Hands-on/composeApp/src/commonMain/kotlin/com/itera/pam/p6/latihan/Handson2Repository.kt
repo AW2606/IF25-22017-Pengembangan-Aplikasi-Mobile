@@ -42,7 +42,13 @@ class UserListStateHolder(
         // TODO 3: jika berhasil, set _state.value ke UiState.Success(users)
         // TODO 4: jika gagal (catch Exception e), set _state.value ke
         //         UiState.Error(e.message ?: "Terjadi kesalahan")
-        TODO("Lengkapi load(): Loading -> try fetch -> Success/Error")
+        _state.value = UiState.Loading
+        try {
+            val users = repository.getUsers()
+            _state.value = UiState.Success(users)
+        } catch (e: Exception) {
+            _state.value = UiState.Error(e.message ?: "Terjadi kesalahan")
+        }
     }
 }
 

@@ -41,6 +41,11 @@ fun Handson1Screen(database: AppDatabase) {
         // TODO 3: simpan nilai baru dengan
         //         database.preferensiQueries.upsert(KEY_JUMLAH_DIBUKA, nilaiBaru.toString())
         // TODO 4: update state `jumlah` dengan nilai baru tsb
+        val nilaiLama = database.preferensiQueries.selectByKey(KEY_JUMLAH_DIBUKA)
+            .executeAsOneOrNull()?.toLongOrNull() ?: 0L
+        val nilaiBaru = nilaiLama + 1
+        database.preferensiQueries.upsert(KEY_JUMLAH_DIBUKA, nilaiBaru.toString())
+        jumlah = nilaiBaru
     }
 
     Column(modifier = Modifier.padding(16.dp)) {

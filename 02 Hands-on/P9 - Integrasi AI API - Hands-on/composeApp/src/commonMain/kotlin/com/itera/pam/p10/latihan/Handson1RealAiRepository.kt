@@ -18,7 +18,12 @@ import com.itera.pam.p10.GEMINI_API_KEY
 import com.itera.pam.p10.GEMINI_BASE_URL
 import com.itera.pam.p10.GEMINI_MODEL
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -73,7 +78,26 @@ class RealAiRepository(
         // TODO 5: Bungkus semuanya dalam try/catch, kembalikan Result.failure(e)
         //   kalau terjadi exception (mis. HTTP error, network error)
 
-        return Result.failure(NotImplementedError("Lengkapi TODO 1-5 di RealAiRepository.ask()"))
+        return try {
+            val requestBody = GeminiRequest(contents = listOf(GeminiContent(listOf(GeminiPart(prompt)))))
+
+            val url = "$GEMINI_BASE_URL/$GEMINI_MODEL:generateContent?key=$GEMINI_API_KEY"
+            val response = client.post(url) {
+                contentType(ContentType.Application.Json)
+                setBody(requestBody)
+            }
+
+            val geminiResponse = response.body<GeminiResponse>()
+
+            val text = geminiResponse.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text
+            if (text == null) {
+                Result.failure(Exception("Tidak ada jawaban dari Gemini (mungkin kena safety filter)"))
+            } else {
+                Result.success(text)
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 }
 
