@@ -23,7 +23,15 @@ class CalculatorTest {
         // TODO 2 (Act): panggil calculator.add(a, b) dan simpan hasilnya
         // TODO 3 (Assert): assertEquals(5, hasil)
 
-        fail("TODO: lengkapi testAdd()")
+        // Arrange
+        val a = 2
+        val b = 3
+
+        // Act
+        val hasil = calculator.add(a, b)
+
+        // Assert
+        assertEquals(5, hasil)
     }
 
     @Test
@@ -31,7 +39,15 @@ class CalculatorTest {
     fun testSubtractNegativeResult() {
         // TODO: lakukan Arrange-Act-Assert untuk memverifikasi 3 - 5 = -2
 
-        fail("TODO: lengkapi testSubtractNegativeResult()")
+        // Arrange
+        val a = 3
+        val b = 5
+
+        // Act
+        val hasil = calculator.subtract(a, b)
+
+        // Assert
+        assertEquals(-2, hasil)
     }
 
     @Test
@@ -39,6 +55,14 @@ class CalculatorTest {
     fun testDivide() {
         // TODO: lakukan Arrange-Act-Assert untuk memverifikasi 10 / 2 = 5
 
-        fail("TODO: lengkapi testDivide()")
+        // Arrange
+        val a = 10
+        val b = 2
+
+        // Act
+        val hasil = calculator.divide(a, b)
+
+        // Assert
+        assertEquals(5, hasil)
     }
 }

@@ -30,4 +30,14 @@ fun main() = runBlocking {
     //         lalu cetak "Total belanja: Rp<total>".
 
     // Kode kamu di sini...
+    launch {
+        writeAccessLog("Checkout dimulai")
+    }
+
+    val totalDeferred: Deferred<Int> = async {
+        calculateTotalPrice(prices)
+    }
+
+    val total = totalDeferred.await()
+    println("Total belanja: Rp$total")
 }
